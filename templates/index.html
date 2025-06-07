@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manim-GPT | AI数学动画生成器</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Code Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Decoration -->
+    <div class="background-decoration"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Logo -->
+                    <div class="logo-section">
+                        <div class="app-logo">
+                            <div class="logo-icon">
+                                <div class="logo-ring"></div>
+                            </div>
+                        </div>
+                        <div class="logo-text">
+                            <h1 class="app-title">Manim-GPT</h1>
+                            <p class="app-subtitle">AI数学动画生成器</p>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <nav class="header-nav">
+                        <a href="/docs" target="_blank" class="nav-link">
+                            <i class="bi bi-book"></i>
+                            <span>API文档</span>
+                        </a>
+                        <a href="https://github.com" target="_blank" class="nav-link">
+                            <i class="bi bi-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Description -->
+                <div class="app-description">
+                    <p>Manim-GPT 是一个基于AI的数学动画生成工具，通过自然语言描述创建专业的数学动画。</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="container">
+                <!-- Function Tabs -->
+                <div class="function-tabs">
+                    <div class="tab-item active">
+                        <i class="bi bi-play-circle"></i>
+                        <span>生成动画</span>
+                    </div>
+                    <div class="tab-item">
+                        <i class="bi bi-cpu"></i>
+                        <span>渲染引擎</span>
+                    </div>
+                    <div class="tab-item">
+                        <i class="bi bi-lightbulb"></i>
+                        <span>提示生成器</span>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="input-section">
+                    <h3 class="section-title">输入描述以生成动画</h3>
+                    
+                    <div class="input-controls">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <textarea 
+                                    id="promptInput" 
+                                    class="main-input" 
+                                    placeholder="描述你想要的数学动画，例如：绘制一个红色的圆"
+                                    rows="3"
+                                ></textarea>
+                                <div class="input-counter">
+                                    <span id="charCount">0</span> 字符
+                                </div>
+                            </div>
+                            
+                            <!-- Voice Input -->
+                            <button id="voiceBtn" class="voice-input-btn">
+                                <i class="bi bi-mic"></i>
+                                <span id="voiceBtnText">语音输入</span>
+                                <div class="voice-wave">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="control-row">
+                            <div class="control-group">
+                                <label class="control-label">AI模型</label>
+                                <select id="modelSelect" class="form-select">
+                                    <option value="deepseek-chat">DeepSeek Chat</option>
+                                    <option value="deepseek-coder">DeepSeek Coder</option>
+                                    <option value="gpt-4">GPT-4</option>
+                                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                    <option value="qwen-turbo">Qwen Turbo</option>
+                                    <option value="qwen-plus">Qwen Plus</option>
+                                    <option value="qwen-max">Qwen Max</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">视频质量</label>
+                                <select id="qualitySelect" class="form-select">
+                                    <option value="low_quality">低质量 (快速)</option>
+                                    <option value="medium_quality" selected>中等质量</option>
+                                    <option value="high_quality">高质量</option>
+                                    <option value="production_quality">产品质量</option>
+                                </select>
+                            </div>
+
+                            <button id="generateBtn" class="generate-btn">
+                                <i class="bi bi-stars"></i>
+                                <span id="generateBtnText">生成</span>
+                                <div class="btn-spinner">
+                                    <div class="spinner"></div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <div class="advanced-settings">
+                            <button class="advanced-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#advancedOptions">
+                                <i class="bi bi-gear"></i>
+                                <span>高级选项</span>
+                                <i class="bi bi-chevron-down toggle-icon"></i>
+                            </button>
+                            
+                            <div class="collapse" id="advancedOptions">
+                                <div class="advanced-content">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="control-label">
+                                                创造性 <span id="temperatureValue" class="value-badge">0.7</span>
+                                            </label>
+                                            <input type="range" class="form-range" id="temperatureRange" 
+                                                   min="0" max="2" step="0.1" value="0.7">
+                                            <div class="range-labels">
+                                                <span>保守</span>
+                                                <span>创新</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="control-label">最大长度</label>
+                                            <input type="number" class="form-control" id="maxTokens" 
+                                                   value="4000" min="100" max="8000">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Section -->
+                <div class="output-section">
+                    <!-- Status -->
+                    <div id="statusCard" class="status-display" style="display: none;">
+                        <div class="status-content">
+                            <div class="status-spinner">
+                                <div class="spinner-ring"></div>
+                                <div class="spinner-ring spinner-ring-2"></div>
+                            </div>
+                            <div class="status-text">
+                                <h4 id="statusTitle">正在生成...</h4>
+                                <p id="statusMessage">请稍等片刻</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div class="results-grid">
+                        <!-- Code Output -->
+                        <div id="codeCard" class="result-panel" style="display: none;">
+                            <div class="panel-header">
+                                <h4 class="panel-title">
+                                    <i class="bi bi-code-slash"></i>
+                                    从代码渲染视频
+                                </h4>
+                                <button id="copyCodeBtn" class="action-btn">
+                                    <i class="bi bi-clipboard"></i>
+                                    <span>复制</span>
+                                </button>
+                            </div>
+                            <div class="code-display">
+                                <div class="code-header">
+                                    <div class="code-lang">Python</div>
+                                    <div class="code-lines">
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                                <pre><code id="generatedCode" class="language-python"></code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Video Output -->
+                        <div id="videoCard" class="result-panel" style="display: none;">
+                            <div class="panel-header">
+                                <h4 class="panel-title">
+                                    <i class="bi bi-play-circle"></i>
+                                    视频
+                                </h4>
+                                <div class="video-actions">
+                                    <button id="downloadBtn" class="action-btn primary">
+                                        <i class="bi bi-download"></i>
+                                        <span>下载</span>
+                                    </button>
+                                    <button id="saveBtn" class="action-btn">
+                                        <i class="bi bi-bookmark"></i>
+                                        <span>保存</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="video-container">
+                                <video id="previewVideo" class="video-player" controls>
+                                    <source src="" type="video/mp4">
+                                    您的浏览器不支持视频播放。
+                                </video>
+                                <div id="videoInfo" class="video-info"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Display -->
+                    <div id="errorCard" class="error-panel" style="display: none;">
+                        <div class="error-content">
+                            <div class="error-icon">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div class="error-text">
+                                <h4>生成失败</h4>
+                                <p id="errorMessage">发生了未知错误</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal fade" id="saveModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">保存动画</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">文件名</label>
+                        <input type="text" class="form-control" id="saveFilename" 
+                               placeholder="我的数学动画">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">保存路径</label>
+                        <input type="text" class="form-control" id="saveDirectory" 
+                               placeholder="留空使用默认路径">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="confirmSaveBtn">
+                        <i class="bi bi-check2"></i>
+                        保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert">
+            <div class="toast-header">
+                <div class="toast-icon me-2">
+                    <i id="toastIcon" class="bi bi-info-circle"></i>
+                </div>
+                <strong id="toastTitle" class="me-auto">通知</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                消息内容
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 
