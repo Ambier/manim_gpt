@@ -20,10 +20,6 @@
 
 ![image](https://github.com/user-attachments/assets/2e56793b-33e7-4b39-9900-680c122b2ada)
 
-![image](https://github.com/user-attachments/assets/5eaa73a0-ff92-4461-b4ff-6600bf3b7687)
-
-![image](https://github.com/user-attachments/assets/b92489a6-08c3-42e4-8e82-c9729d40b6ef)
-
 ### 🎯 项目愿景
 
 - **零门槛创作**：无需学习Manim语法，用自然语言即可创建动画
@@ -32,6 +28,7 @@
 - **现代化UI**：美观直观的Web界面，流畅的用户体验
 
 ## ✨ 功能特性
+![image](https://github.com/user-attachments/assets/5eaa73a0-ff92-4461-b4ff-6600bf3b7687)
 
 ### 🤖 智能代码生成
 - **多模型支持**：DeepSeek、OpenAI GPT、阿里云通义千问
@@ -42,6 +39,8 @@
 - **通义千问-Omni**：高精度中英文语音识别
 - **实时转换**：语音直接转换为动画描述
 - **多格式支持**：WebM、WAV、OGG等音频格式
+
+![image](https://github.com/user-attachments/assets/b92489a6-08c3-42e4-8e82-c9729d40b6ef)
 
 ### 🎨 丰富动画效果
 - **数学图形**：函数、几何、代数等
