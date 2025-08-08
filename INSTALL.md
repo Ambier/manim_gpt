@@ -57,4 +57,3 @@ A: 验证 `.env` 文件中的API密钥格式和有效性
 
 - 查看完整文档: [README.md](README.md)
 - 报告问题: [GitHub Issues]
-- API文档: http://localhost:8000/docs 
